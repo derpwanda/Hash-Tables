@@ -70,8 +70,9 @@ unsigned int hash(char *str, int max)
  ****/
 BasicHashTable *create_hash_table(int capacity)
 {
-  BasicHashTable *ht = calloc(capacity, sizeof(BasicHashTable));
-  ht->storage = NULL;
+  BasicHashTable *ht = malloc(sizeof(BasicHashTable));
+  ht->capacity = capacity;
+  ht->storage = calloc(capacity, sizeof(Pair*));
 
   return ht;
 }
@@ -87,16 +88,18 @@ void hash_table_insert(BasicHashTable *ht, char *key, char *value)
 {
   Pair *new_pair = create_pair(key, value);
   
-  for (int i=0; i<=ht->capacity; i++)
-    {
-      if(ht->storage[i] == NULL)
-      {
-        // free(ht->storage[i]);
-        ht->storage[i] = new_pair;
-        break;
-      }
-    }
+  int hash_key = hash(key,ht->capacity);
 
+  Pair *stored_pair = ht->storage[hash_key];
+
+  if (stored_pair == NULL)
+  {
+    ht->storage[hash_key] = new_pair;
+  } else {
+    printf("Warning: destroying this pair!");
+    destroy_pair(ht->storage[hash_key]);
+    
+  }
 }
 
 /****
@@ -116,7 +119,13 @@ void hash_table_remove(BasicHashTable *ht, char *key)
  ****/
 char *hash_table_retrieve(BasicHashTable *ht, char *key)
 {
-  return NULL;
+  int hash_key = hash(key,ht->capacity);
+
+  if(ht->storage[hash_key] != NULL)
+  {
+    return ht->storage[hash_key]->value;
+  }
+  return NULL; //if NULL, return NULL
 }
 
 /****
