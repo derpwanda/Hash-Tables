@@ -86,6 +86,16 @@ BasicHashTable *create_hash_table(int capacity)
 void hash_table_insert(BasicHashTable *ht, char *key, char *value)
 {
   Pair *new_pair = create_pair(key, value);
+  
+  for (int i=0; i<=ht->capacity; i++)
+    {
+      if(ht->storage[i] == NULL)
+      {
+        // free(ht->storage[i]);
+        ht->storage[i] = new_pair;
+        break;
+      }
+    }
 
 }
 
