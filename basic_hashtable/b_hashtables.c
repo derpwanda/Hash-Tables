@@ -109,6 +109,9 @@ void hash_table_insert(BasicHashTable *ht, char *key, char *value)
  ****/
 void hash_table_remove(BasicHashTable *ht, char *key)
 {
+  int hash_key = hash(key,ht->capacity);
+
+  
 
 
 }
@@ -141,7 +144,7 @@ void destroy_hash_table(BasicHashTable *ht)
     destroy_pair(ht->storage[i]);
   }
   free(ht->storage);
-  free(arr);
+  free(ht);
 }
 
 
