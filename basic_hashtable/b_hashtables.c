@@ -73,7 +73,8 @@ BasicHashTable *create_hash_table(int capacity)
   BasicHashTable *ht = malloc(sizeof(BasicHashTable));
   ht->capacity = capacity;
   ht->storage = calloc(capacity, sizeof(Pair*));
-
+  //we add the star after pair to NOT make room for the Pair struct
+  
   return ht;
 }
 
@@ -87,8 +88,8 @@ BasicHashTable *create_hash_table(int capacity)
 void hash_table_insert(BasicHashTable *ht, char *key, char *value)
 {
   Pair *new_pair = create_pair(key, value);
-  
-  int hash_key = hash(key,ht->capacity);
+  //added unsigned
+  unsigned int hash_key = hash(key,ht->capacity);
 
   Pair *stored_pair = ht->storage[hash_key];
 
@@ -98,9 +99,20 @@ void hash_table_insert(BasicHashTable *ht, char *key, char *value)
   } else {
     printf("Warning: destroying this pair!");
     destroy_pair(ht->storage[hash_key]);
-    
   }
 }
+
+  //   if (stored_pair != NULL)
+  //   {
+  //     if(strcmp(key, stored_pair->key) != 0)
+  //     {
+  //     printf("Warning: destroying this pair!'%s'/'%s' with '%s'/'%s'\n",
+  //     stored_pair->key, stored_pair->value, pair->key, pair->value;
+  //     }
+  //     destroy_pair(stored_pair);
+  //   }
+  //   ht->storage[hash_key] = pair;
+  // }
 
 /****
   Fill this in.
@@ -109,7 +121,8 @@ void hash_table_insert(BasicHashTable *ht, char *key, char *value)
  ****/
 void hash_table_remove(BasicHashTable *ht, char *key)
 {
-  int hash_key = hash(key,ht->capacity);
+  //added unsigned
+  unsigned int hash_key = hash(key,ht->capacity);
   Pair *stored_pair = ht->storage[hash_key];
 
   if (stored_pair != NULL)
@@ -119,6 +132,14 @@ void hash_table_remove(BasicHashTable *ht, char *key)
   }
 }
 
+// if (ht->storage[hash_key] == NULL || strcmp(ht-storage[hash_key], ??) )
+// {
+//   fprintf(stderr, "Unable to remove '%s'", key)
+// }else{
+//   destroy_pair(ht->storage[hash_key])
+//   ht->storage[hash_key] == NULL;
+// }
+
 /****
   Fill this in.
 
@@ -126,7 +147,7 @@ void hash_table_remove(BasicHashTable *ht, char *key)
  ****/
 char *hash_table_retrieve(BasicHashTable *ht, char *key)
 {
-  int hash_key = hash(key,ht->capacity);
+  unsigned int hash_key = hash(key,ht->capacity);
 
   if(ht->storage[hash_key] != NULL)
   {
