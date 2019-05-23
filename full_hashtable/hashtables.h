@@ -17,13 +17,13 @@ HashTable *create_hash_table(int capacity);
 
 void hash_table_insert(HashTable *ht, char *key, char *value);
 
-void hash_table_remove(HashTable *ht, char *key);
+// void hash_table_remove(HashTable *ht, char *key);
 
-char *hash_table_retrieve(HashTable *ht, char *key);
+// char *hash_table_retrieve(HashTable *ht, char *key);
 
-void destroy_hash_table(HashTable *ht);
+// void destroy_hash_table(HashTable *ht);
 
-HashTable *hash_table_resize(HashTable *ht);
+// HashTable *hash_table_resize(HashTable *ht);
 
 
 #endif
